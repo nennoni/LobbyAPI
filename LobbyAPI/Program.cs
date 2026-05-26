@@ -11,10 +11,22 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<LobbyHandler>();
 builder.Services.AddSignalR();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 
 //app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
