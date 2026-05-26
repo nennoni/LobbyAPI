@@ -14,7 +14,7 @@ builder.Services.AddSignalR();
 var app = builder.Build();
 
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
@@ -22,4 +22,7 @@ app.MapControllers();
 
 app.MapHub<GameHub>("/gamehub");
 
-app.Run();
+//app.Run();
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Run($"http://0.0.0.0:{port}");
