@@ -27,7 +27,11 @@
                         break;
 
                     string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    await BroadcastToLobby(lobbyCode, socket, message);
+
+                    if (message.Contains("gameover"))
+                        await BroadcastToAll(lobbyCode, message);
+                    else
+                        await BroadcastToLobby(lobbyCode, socket, message);
                 }
             }
             finally
@@ -48,6 +52,21 @@
             foreach (var socket in sockets.ToList())
             {
                 if (socket != sender && socket.State == WebSocketState.Open)
+                {
+                    await socket.SendAsync(new ArraySegment<byte>(bytes),
+                        WebSocketMessageType.Text, true, CancellationToken.None);
+                }
+            }
+        }
+
+        private async Task BroadcastToAll(string lobbyCode, string message)
+        {
+            if (!lobbies.TryGetValue(lobbyCode, out var sockets)) return;
+
+            var bytes = Encoding.UTF8.GetBytes(message);
+            foreach (var socket in sockets.ToList())
+            {
+                if (socket.State == WebSocketState.Open)
                 {
                     await socket.SendAsync(new ArraySegment<byte>(bytes),
                         WebSocketMessageType.Text, true, CancellationToken.None);
