@@ -54,7 +54,8 @@ namespace LobbyAPI.Controllers
             return Ok(lobby);
         }
 
-        // Startar spelet i en lobby
+
+
         [HttpPost("start/{lobbyCode}")]
         public IActionResult StartGame(string lobbyCode)
         {
@@ -66,7 +67,7 @@ namespace LobbyAPI.Controllers
             return Ok(lobby);
         }
 
-        // Stänger en lobby
+
         [HttpDelete("close/{lobbyCode}")]
         public IActionResult CloseLobby(string lobbyCode)
         {

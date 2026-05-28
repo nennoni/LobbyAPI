@@ -27,7 +27,6 @@
                         break;
 
                     string message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    Console.WriteLine($"Mottaget: {message}"); // ◄ lägg till
 
                     if (message.Contains("gameover"))
                         await BroadcastToAll(lobbyCode, message);
@@ -59,7 +58,6 @@
                 }
             }
         }
-
         private async Task BroadcastToAll(string lobbyCode, string message)
         {
             if (!lobbies.TryGetValue(lobbyCode, out var sockets)) return;

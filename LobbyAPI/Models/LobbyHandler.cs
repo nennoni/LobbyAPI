@@ -3,6 +3,8 @@
     public class LobbyHandler
     {
         private Dictionary<string, Lobby> lobbies = new Dictionary<string, Lobby>();
+
+
         public string GenerateLobbyCode()
         {
             const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -47,7 +49,6 @@
         public Lobby GetLobby(string lobbyCode)
         {
             lobbies.TryGetValue(lobbyCode, out Lobby lobby);
-            Console.WriteLine($"GetLobby: {lobbyCode}, player2: {lobby?.player2}");
             return lobby;
         }
 
